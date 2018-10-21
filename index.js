@@ -28,7 +28,10 @@
         let div = document.createElement("div");
         div.setAttribute("id", "div");
         $("main").appendChild(div);
-
+        if (grid[i][j] != null) {
+         let n = i*j;
+         document.querySelectorAll
+        }
       }
       //$("main").appendChild("br");
 
