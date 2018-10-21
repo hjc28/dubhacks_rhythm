@@ -1,8 +1,11 @@
 (function (){
   "use strict";
+  let grid = [];
   window.addEventListener("load", initialize);
   function initialize(){
+    solution();
     makeGrid();
+    
     //let div = document.createElement("div");
     //div.setAttribute("id","div");
     //$("main").appendChild(div);
@@ -30,5 +33,12 @@
       //$("main").appendChild("br");
 
     }
-  } 
+  }
+  function solution(){
+    grid = [["Cq","Cq",null,null,null],
+            [null, "Gq", null, null, null ],
+            [null,"Gq","Aq",null,null],
+            [null,"Gh","Aq",null,null,],
+            [null,null,null,null,null]]
+  }
 })();
