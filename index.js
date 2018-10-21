@@ -16,10 +16,19 @@
   function initialize(){
     makeGrid();
     makeSound();
-    let t = reveal(0,300);
-    setTimeout(play, qsa('[cr]').length*300);
+    let s = 1;
+    play(s);
   }
-
+  function play(s){
+    reveal(0,300,s);
+    setTimeout(function(){
+      qs("main").classList.remove("wait");
+    },s*600)
+    setTimeout(function(){
+      s = getNewS(s);
+      play(s);
+    },2000*s);
+  }
   function makeGrid() {
     let solution = getSolution();
     let x = 0;
@@ -74,19 +83,30 @@
     }
     return solution;
   }
-  function reveal(i,t) {
+
+  function reveal(i,t,max) {
     setTimeout(function(){
         qsa('[cr]')[i].classList.add("pink");
     }, t);
     setTimeout(function(){
         qsa('[cr]')[i].classList.remove("pink");
     }, t+300);
-    if(i+1 < qsa('[cr]').length){
-      reveal(i+1,t+600);
+    if(i+1 < max){
+      reveal(i+1,t+600,max);
     }
   }
-  function play(){
-    qs("main").classList.remove("wait");
+  function getNewS(s){
+    let check = true;
+    for(let i = 0 ; i < s; i++){
+      if(qsa("[cr]")[i].getAttribute("[cr]") === 0){
+        check = false;
+      }
+    }
+    if(check){
+      return s+1;
+    } else {
+      return -1;
+    }
   }
   function blink(){
     if(this.hasAttribute("cr")){
@@ -96,6 +116,7 @@
         qs(".lime").classList.remove("lime");
         qs(".wait").classList.remove("wait")
       },1000);
+      this.setAttribute("cr",this.getAttribute("[cr]")+1);
     } else {
       this.classList.add("wait");
       this.classList.add("red")
@@ -109,11 +130,9 @@
     var synth = new Tone.AMSynth().toMaster();
     document.querySelectorAll("div").forEach(function(div){
       div.addEventListener('mousedown', function(e) {
-      //play the note on mouse down
       synth.triggerAttackRelease(e.target.getAttribute(["note"]));
       });
       div.addEventListener('mouseup', function(e) {
-      //release on mouseup
       synth.triggerRelease();
       });
     });
