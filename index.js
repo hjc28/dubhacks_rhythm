@@ -15,14 +15,16 @@
   window.addEventListener("load", initialize);
   function initialize(){
     makeGrid();
-    reveal(0,300);
-    setTimeout(play, 4300);
+    makeSound();
+    let t = reveal(0,300);
+    setTimeout(play, qsa('[cr]').length*300);
   }
 
   function makeGrid() {
     let solution = getSolution();
     let x = 0;
     let y = 0;
+    qs("main").classList.add("wait");
     for (let i = 0; i < 6; i++) {
       y = x;
       for (let j = 0; j <10; j++) {
@@ -31,7 +33,6 @@
         div.setAttribute("id", "div");
         $("main").appendChild(div);
         qsa("div")[x].classList.add("cursor");
-        qsa("div")[x].classList.add("wait");
         qsa("div")[x].setAttribute("note",NOTE[note_index]);
         if(solution.get(NOTE[note_index]) > 0){
           qsa("div")[x].setAttribute("cr",0);
@@ -85,9 +86,7 @@
     }
   }
   function play(){
-    for(let i = 0 ; i < qsa("div").length; i++){
-      qsa("div")[i].classList.remove("wait");
-    }
+    qs("main").classList.remove("wait");
   }
   function blink(){
     if(this.hasAttribute("cr")){
@@ -105,6 +104,19 @@
         qs(".wait").classList.remove("wait")
       },1000);
     }
+  }
+  function makeSound(){
+    var synth = new Tone.AMSynth().toMaster();
+    document.querySelectorAll("div").forEach(function(div){
+      div.addEventListener('mousedown', function(e) {
+      //play the note on mouse down
+      synth.triggerAttackRelease(e.target.getAttribute(["note"]));
+      });
+      div.addEventListener('mouseup', function(e) {
+      //release on mouseup
+      synth.triggerRelease();
+      });
+    });
   }
   function $(id){
     return document.getElementById(id);
