@@ -25,7 +25,7 @@ div {
 
 .lime {
   background-color: lime;
-  box-shadow: 0 0 6px 6px lime;
+  box-shadow: 0 0 3px 3px lime;
 }
 
 .pink {
@@ -35,5 +35,9 @@ div {
 
 .red {
   background-color: red;
-  box-shadow: 0 0 6px 6px red;
+  box-shadow: 0 0 3px 3px red;
+}
+
+.wait {
+    pointer-events: none;
 }
