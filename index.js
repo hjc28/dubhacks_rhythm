@@ -22,7 +22,9 @@
   function makeGrid() {
     let solution = getSolution();
     let x = 0;
+    let y = 0;
     for (let i = 0; i < 6; i++) {
+      y = x;
       for (let j = 0; j <10; j++) {
         let note_index = Math.floor(Math.random() * 21);
         let div = document.createElement("div");
@@ -30,17 +32,31 @@
         $("main").appendChild(div);
         qsa("div")[x].classList.add("cursor");
         qsa("div")[x].classList.add("wait");
-        qsa("div")[x].setAttribute("note",NOTE[note_index])
+        qsa("div")[x].setAttribute("note",NOTE[note_index]);
         if(solution.get(NOTE[note_index]) > 0){
           qsa("div")[x].setAttribute("cr",0);
         }
         qsa("div")[x].addEventListener("click",blink);
         x++;
-      }/*
-        for(let j = 0; j <10; j++){
-          let list = [];
-          list.push(qsa("div"));
-        }*/
+      }
+      let list = [];
+      let diff = x-y;
+      x = x-diff;
+      for(let j = 0; j <10; j++){
+          list[j] = qsa("div")[x].getAttribute("note");
+          x++;
+      }
+      let check = false;
+      for(let i = 0; i < list.length; i++){
+        if(solution.get(i) > 0){
+          check = true;
+        }
+      }
+      if(!check){
+        let index = Math.floor(Math.random() * diff)+y;
+        let only_correct = Math.floor(Math.random()*7) + 6;
+        qsa("div")[index].setAttribute("note",NOTE[only_correct]);
+      }
       $("main").appendChild(document.createElement("br"));
     }
   }
