@@ -26,7 +26,9 @@
     },s*600)
     setTimeout(function(){
       s = getNewS(s);
-      play(s);
+      if(s > 0) {
+        play(s);
+      }
     },2000*s);
   }
   function makeGrid() {
@@ -96,16 +98,10 @@
     }
   }
   function getNewS(s){
-    let check = true;
-    for(let i = 0 ; i < s; i++){
-      if(qsa("[cr]")[i].getAttribute("[cr]") === 0){
-        check = false;
-      }
-    }
-    if(check){
-      return s+1;
-    } else {
+    if(qsa(".clicked") === null){
       return -1;
+    } else {
+      return s+1;
     }
   }
   function blink(){
@@ -124,6 +120,7 @@
         qs(".red").classList.remove("red");
         qs(".wait").classList.remove("wait")
       },1000);
+      this.classList.add("clicked");
     }
   }
   function makeSound(){
