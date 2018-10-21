@@ -8,6 +8,9 @@ div {
   display: inline-flex;
 }
 
+[note]:hover{
+  cursor: pointer;
+}
 
 
 .lime {

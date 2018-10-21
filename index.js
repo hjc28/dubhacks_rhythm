@@ -5,7 +5,7 @@
   function initialize(){
     solution();
     makeGrid();
-    
+
     //let div = document.createElement("div");
     //div.setAttribute("id","div");
     //$("main").appendChild(div);
@@ -29,8 +29,8 @@
         div.setAttribute("id", "div");
         $("main").appendChild(div);
         if (grid[i][j] != null) {
-         let n = i*j;
-         document.querySelectorAll
+         let n = (i+1)*(j+1);
+         document.querySelectorAll("div")[n].setAttribute("note",grid[i][j]);
         }
       }
       //$("main").appendChild("br");
